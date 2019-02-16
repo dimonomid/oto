@@ -30,8 +30,7 @@ type Context struct {
 }
 
 var (
-	theContext *Context
-	contextM   sync.Mutex
+	contextM sync.Mutex
 )
 
 var errClosed = errors.New("closed")
@@ -56,10 +55,6 @@ func NewContext(sampleRate, channelNum, bitDepthInBytes, bufferSizeInBytes int) 
 	contextM.Lock()
 	defer contextM.Unlock()
 
-	if theContext != nil {
-		panic("oto: NewContext can be called only once")
-	}
-
 	d, err := newDriver(sampleRate, channelNum, bitDepthInBytes, bufferSizeInBytes)
 	if err != nil {
 		return nil, err
@@ -74,7 +69,6 @@ func NewContext(sampleRate, channelNum, bitDepthInBytes, bufferSizeInBytes int) 
 		mux:          mux.New(channelNum, bitDepthInBytes),
 		errCh:        make(chan error),
 	}
-	theContext = c
 	go func() {
 		if _, err := io.Copy(c.driverWriter, c.mux); err != nil {
 			c.errCh <- err
