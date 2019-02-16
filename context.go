@@ -20,7 +20,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/hajimehoshi/oto/internal/mux"
+	"github.com/dimonomid/oto/internal/mux"
 )
 
 type Context struct {

@@ -1,4 +1,4 @@
-module github.com/hajimehoshi/oto
+module github.com/dimonomid/oto
 
 require (
 	github.com/gopherjs/gopherwasm v1.0.0
